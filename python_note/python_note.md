@@ -1,5 +1,47 @@
 # Python Note
 
+## Python 函数相关
+
+##### range
+
+- Syntax: range(start, stop, step)
+
+  Parameter :
+
+  start: [ optional ] start value of the sequence
+  stop: next value after the end value of the sequence
+  step: [ optional ] integer value, denoting the difference between any two numbers in the sequence
+  Return : Returns an object that represents a sequence of numbers
+
+```python
+for i in range(0, 10, 2):
+    print(i, end=" ")
+print()
+
+'''
+0 2 4 6 8
+'''
+
+# incremented by -2
+for i in range(25, 2, -2):
+    print(i, end=" ")
+print()
+
+'''
+25 23 21 19 17 15 13 11 9 7 5 3 
+'''
+```
+
+
+
+
+
+
+
+
+
+
+
 ## Python 语法相关
 
 #### 双星操作符
