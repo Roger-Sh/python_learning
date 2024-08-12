@@ -96,21 +96,27 @@ print()
 
   - setting 中的操作
     - Editor: Default Formatter
-      - Black Formatter
+      - **必须设置为null, 不能选择 black**
     - Editor: Format On Save
       - on
+    
   - 下方控制条中的 Python 版本，选择与命令行对应的env版本
-
+  
     - env中也需要安装black
-
-    - ```
-      pip install black
+  
+        ```
+        pip install black
+        ```
+  
+    - 外部的环境中需要卸载 black
+  
       ```
-
+      pip uninstall black
+      ```
+  
   - black 目前只支持 3.8 以上
+  
     - Black-formatter: Interpreter 选项中加入 py3.8 以上的环境
-
-
 
 - isort
 
