@@ -88,7 +88,7 @@ print()
 
 
 
-## Python 开发相关
+## Python 开发辅助
 
 ### VSCode + Python
 
@@ -242,7 +242,7 @@ print()
 
   
 
-## Python 基础包
+## Python 基础功能包
 
 ### argparse
 
@@ -303,3 +303,236 @@ print()
   ```
 
   
+
+### tqdm
+
+1. **简介**
+   `tqdm` 是一个 Python 库,用于向控制台或 Jupyter Notebook 中添加进度条。它可以让你轻松地为任何可迭代对象(如列表、范围或自定义迭代器)添加进度显示。
+2. **主要特性**
+
+- **进度条显示**: `tqdm` 主要功能是在任何迭代过程中显示进度条,进度条会显示完成百分比、总项目数和已用时间。
+- **嵌套进度条**: `tqdm` 支持嵌套进度条,这在有复杂工作流程和多个子任务时非常有用。
+- **自定义**: 你可以根据需要自定义进度条的外观,如宽度、颜色和格式。
+- **Jupyter Notebook 支持**: `tqdm` 有针对 Jupyter Notebook 的优化,可以在笔记本中流畅地显示进度条。
+- **兼容性**: `tqdm` 支持 Python 2 和 Python 3,并且可以在各种 Python 版本中使用。
+
+
+
+**循环迭代**
+
+```python
+from tqdm import tqdm
+
+for i in tqdm(range(1000), desc="Processing items"):
+    # 执行某些操作
+    pass
+```
+
+在这个例子中,`tqdm` 函数用于包装 `range(1000)` 迭代器,`desc` 参数用于设置进度条的描述。
+
+**处理文件**
+
+```python
+from tqdm import tqdm
+
+with open("large_file.txt", "r") as f:
+    for line in tqdm(f, desc="Reading file", unit="lines"):
+        # 处理每一行
+        pass
+```
+
+这个例子展示了如何在处理大文件时使用 `tqdm` 来显示读取进度,`unit` 参数用于设置进度单位为"行"。
+
+**嵌套进度条**
+
+```python
+from tqdm import tqdm
+
+outer_iterable = range(10)
+inner_iterable = range(1000)
+
+with tqdm(outer_iterable, desc="Outer Loop") as outer:
+    for _ in outer:
+        with tqdm(inner_iterable, desc="Inner Loop", leave=False, position=0) as inner:
+            for _ in inner:
+                # 执行某些操作
+                pass
+```
+
+在这个例子中,我们使用嵌套的进度条来显示外层循环和内层循环的进度。`leave=False` 确保内层进度条在循环结束时被清除,`position=0` 确保进度条显示在同一行。
+
+
+
+## Python 数据功能包
+
+### Numpy
+
+#### np.max() & np.argmax()
+
+1. **`np.max()`**:
+   - 功能: 返回数组中的最大值。
+   - 语法: `np.max(a, axis=None, out=None, keepdims=False)`
+   - 参数:
+     - `a`: 输入数组。
+     - `axis`: 沿着该轴找最大值。如果不指定,则返回数组中的最大值。
+     - `out`: 存储结果的输出数组。
+     - `keepdims`: 如果为 True,则结果数组的维度保持不变。
+   - 返回值: 数组中的最大值。
+2. **`np.argmax()`**:
+   - 功能: 返回数组中最大值的索引。
+   - 语法: `np.argmax(a, axis=None, out=None)`
+   - 参数:
+     - `a`: 输入数组。
+     - `axis`: 沿着该轴找最大值的索引。如果不指定,则返回数组中最大值的一维索引。
+     - `out`: 存储结果的输出数组。
+   - 返回值: 数组中最大值的索引。
+
+```python
+import numpy as np
+
+# 创建一个 2D 数组
+arr = np.array([[1, 5, 2], [4, 3, 6]])
+
+# 获取数组中的最大值
+max_value = np.max(arr)
+print("最大值:", max_value)  # 输出: 最大值: 6
+
+# 获取最大值的位置索引
+max_index = np.argmax(arr)
+print("最大值的索引:", max_index)  # 输出: 最大值的索引: 5
+
+# 如果需要获取 2D 数组中最大值的行列索引
+row_index, col_index = np.unravel_index(max_index, arr.shape)
+print("最大值的行列索引:", row_index, col_index)  # 输出: 最大值的行列索引: 1 2
+```
+
+
+
+### collections
+
+#### Counter:
+
+- 这是`dict`类的子类,提供了计数hashable对象的便捷方法。
+
+- 可以用来统计列表中元素的出现频率。
+
+- 示例:
+
+  ```python
+  from collections import Counter
+  print(Counter(['a', 'b', 'c', 'a', 'b', 'b']))
+  # 输出: Counter({'b': 3, 'a': 2, 'c': 1})
+  ```
+
+#### defaultdict:
+
+- 这也是`dict`类的子类,提供了缺失键的默认值。
+
+- 当你想初始化一个字典,并给新键一个特定的默认值时很有用。
+
+- 示例:
+
+  ```python
+  from collections import defaultdict
+  d = defaultdict(int)
+  d['a'] += 1
+  d['b'] += 2
+  print(d)
+  # 输出: defaultdict(<class 'int'>, {'a': 1, 'b': 2})
+  ```
+
+#### OrderedDict:
+
+- 这也是`dict`类的子类,记住了键首次插入的顺序。
+
+- 当你需要保持字典中元素的顺序时很有用。
+
+- 示例:
+
+  ```python
+  from collections import OrderedDict
+  od = OrderedDict()
+  od['a'] = 1
+  od['b'] = 2
+  od['c'] = 3
+  print(od)
+  # 输出: OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+  ```
+
+#### namedtuple:
+
+- 这是一个工厂函数,创建一个带有命名字段的新的元组子类。
+
+- 当你需要创建轻量级的对象类似结构,而不需要定义一个完整的类时很有用。
+
+- 示例:
+
+  ```python
+  from collections import namedtuple
+  Point = namedtuple('Point', ['x', 'y'])
+  p = Point(x=1, y=2)
+  print(p.x, p.y)
+  # 输出: 1 2
+  ```
+
+
+
+#### deque
+
+1. **创建deque**
+
+   ```python
+   from collections import deque
+   d = deque()
+   ```
+
+2. **在两端添加元素**
+
+   ```python
+   d.append(1)
+   d.appendleft(2)
+   print(d)  # Output: deque([2, 1])
+   ```
+
+3. **在两端删除元素**
+
+   ```python
+   d.pop()   # Removes and returns 1
+   d.popleft()  # Removes and returns 2
+   print(d)  # Output: deque([])
+   ```
+
+4. **设置最大长度**
+
+   ```python
+   d = deque(maxlen=3)
+   d.append(1)
+   d.append(2)
+   d.append(3)
+   d.append(4)
+   print(d)  # Output: deque([2, 3, 4], maxlen=3)
+   ```
+
+   当deque达到最大长度时,新添加的元素会自动挤掉最早添加的元素。
+
+5. **迭代deque**
+
+   ```python
+   for item in d:
+       print(item)
+   ```
+
+6. **将deque转换为其他数据结构**
+
+   ```python
+   list(d)
+   tuple(d)
+   ```
+
+`deque`的一些常见用途包括:
+
+- 实现先进先出(FIFO)队列
+- 在两端进行高效的插入和删除操作
+- 在固定大小的窗口内保存数据,如最近的N个元素
+
+总的来说,`collections.deque`是一个非常灵活和高效的数据结构,在需要频繁在两端添加或删除元素的场景中非常有用。
